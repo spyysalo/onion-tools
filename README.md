@@ -55,7 +55,7 @@ This should result in the following:
 
 ```
 wc -l fi-{dup,dedup}.tsv
-    263 fi-dup.tsv
-    737 fi-dedup.tsv
+    248 fi-dup.tsv
+    752 fi-dedup.tsv
    1000 total
 ```
