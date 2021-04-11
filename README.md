@@ -42,9 +42,10 @@ python3 tsv_to_vert.py example-data/fi.tsv > fi.vert
 onion fi.vert > fi.vert.onion
 ```
 
-Get IDs and filter out fully duplicated documents
+Get IDs and separate fully duplicated documents
 
 ```
 python3 doc_duprate.py fi.vert.onion | egrep '^1\.0' | cut -f 2 > fi-dup-ids.txt
+fgrep -f fi-dup-ids.txt example-data/fi.tsv > fi-dup.tsv
 fgrep -v -f fi-dup-ids.txt example-data/fi.tsv > fi-dedup.tsv
 ```
