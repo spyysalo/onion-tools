@@ -23,11 +23,28 @@ tar xvzf onion-1.2.tar.gz
 cd onion-1.2
 perl -p -i -e 's|^(PREFIX=).*|${1}'"$HOME"'/local|' Makefile.config 
 perl -p -i -e 's|^#?(JUDY_INC=).*|${1}-I'"$HOME"'/local/include|' Makefile.config
-perl -p -i -e 's|^#?(JUDY_LIB=).*|${1}-L'"$HOME"'/local/lib|' Makefile.config 
+perl -p -i -e 's|^#?(JUDY_LIB=).*|${1}-L'"$HOME"'/local/lib|' Makefile.config
+cd -
 ```
 
 Add `onion` to path (you may want to add this line to e.g. `$HOME/.bash_profile`)
 
 ```
 PATH=$PATH:$HOME/local/bin
+```
+
+Run on example data
+
+```
+git clone https://github.com/spyysalo/onion-tools.git
+cd onion-tools
+python3 tsv_to_vert.py example-data/fi.tsv > fi.vert
+onion fi.vert > fi.vert.onion
+```
+
+Get IDs and filter out fully duplicated documents
+
+```
+python3 doc_duprate.py fi.vert.onion | egrep '^1\.0' | cut -f 2 > fi-dup-ids.txt
+fgrep -v -f fi-dup-ids.txt example-data/fi.tsv > fi-dedup.tsv
 ```
