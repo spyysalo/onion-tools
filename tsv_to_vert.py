@@ -44,7 +44,7 @@ def tsv_to_vert(fn, options):
                 logging.error(f'failed to parse {fn} line {ln}: {e}: {l}')
                 continue
             print(f'<doc id="{xml_attr_escape(id_)}">')
-            for para in text.split('\n\n'):
+            for para in text.split('\n'):
                 print(f'<p>')
                 for token in para.split():
                     print(token)
