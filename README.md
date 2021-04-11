@@ -50,3 +50,12 @@ python3 doc_duprate.py fi.vert.onion | egrep '^1\.0' | cut -f 2 > fi-dup-ids.txt
 fgrep -f fi-dup-ids.txt example-data/fi.tsv > fi-dup.tsv
 fgrep -v -f fi-dup-ids.txt example-data/fi.tsv > fi-dedup.tsv
 ```
+
+This should result in the following:
+
+```
+wc -l fi-{dup,dedup}.tsv
+    263 fi-dup.tsv
+    737 fi-dedup.tsv
+   1000 total
+```
