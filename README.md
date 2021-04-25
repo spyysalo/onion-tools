@@ -28,10 +28,11 @@ make && make install
 cd -
 ```
 
-Add `onion` to path (you may want to add this line to e.g. `$HOME/.bash_profile`)
+Add to path (you may want to add this to e.g. `$HOME/.bash_profile`)
 
 ```
-PATH=$PATH:$HOME/local/bin
+export PATH=$PATH:$HOME/local/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/local/lib
 ```
 
 Run on example data
