@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import sys
-import re
 import logging
 import xml.etree.ElementTree as ET
 
@@ -9,6 +8,9 @@ from argparse import ArgumentParser
 
 
 DESCRIPTION = 'Get document duplication rate from onion output'
+
+DOC_TAG = 'doc'
+PARA_TAG = 'p'
 
 
 def argparser():
@@ -34,7 +36,7 @@ def get_duprate(fn, options):
             except Exception as e:
                 logging.error(f'failed to parse {fn} line {ln}: {e}: {l}')
                 continue
-            if token.startswith('<doc'):
+            if token.startswith(f'<{DOC_TAG}'):
                 current_marks = []
                 try:
                     current_id = get_id(token)
@@ -44,7 +46,7 @@ def get_duprate(fn, options):
                     continue
             if current_id is not None:
                 current_marks.append(mark)
-            if token.startswith('</doc>'):
+            if token.startswith(f'</{DOC_TAG}>'):
                 rate = sum(current_marks)/len(current_marks)
                 print(f'{rate}\t{current_id}')
                 current_id = None
