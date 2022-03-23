@@ -45,12 +45,16 @@ def read_documents(f):
             mark, l = l.split('\t')
             mark = int(mark)
         except Exception as e:
-            logging.error(f'failed to parse {fn} line {ln}: {e}: {l}')
+            logging.error(f'failed to parse {f.name} line {ln}: {e}: {l}')
             continue
         if l.startswith(f'<{DOC_TAG}>') or l.startswith(f'<{DOC_TAG} '):
             assert current_doc is None
             current_doc = {}
-            elem = parse_start_tag(l)
+            try:
+                elem = parse_start_tag(l)
+            except Exception as e:
+                logging.error(f'failed to parse {f.name} line {ln}: {e}: {l}')
+                raise
             current_doc['id'] = elem.attrib['id']
             if 'meta' in elem.attrib:
                 current_doc['meta'] = literal_eval(elem.attrib['meta'])
