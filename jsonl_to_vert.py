@@ -37,7 +37,7 @@ def output_document(data, out=sys.stdout):
     attrib = {}
     for key in ('id', 'meta'):
         if key in data:
-            attrib[key] = data.pop(key)
+            attrib[key] = str(data.pop(key))
     extra = { key for key in data if key != 'text' }
     if extra:
         logging.warning(f'extra attributes: {extra}')
