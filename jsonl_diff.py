@@ -27,14 +27,20 @@ def skip_until(orig, filt_item):
     return None
 
 
+def split_text_for_diff(text):
+    # assure terminal newline for diff
+    text = text.rstrip('\n') + '\n'
+    return text.splitlines(keepends=True)
+
+
 def process(orig, filt, args):
     for filt_line in filt:
         filt_item = json.loads(filt_line)
         orig_item = skip_until(orig, filt_item)
         if orig_item is None:
             break
-        orig_text = orig_item['text'].splitlines(True)
-        filt_text = filt_item['text'].splitlines(True)
+        orig_text = split_text_for_diff(orig_item['text'])
+        filt_text = split_text_for_diff(filt_item['text'])
         if orig_text == filt_text:
             continue
         print(f'diff {orig_item["id"]}')
