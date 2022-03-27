@@ -51,6 +51,8 @@ def process(orig, filt, args):
                 print('<', line[1:].rstrip('\n'))
             elif line.startswith('+'):
                 print('>', line[1:].rstrip('\n'))
+            elif line.startswith('@@'):
+                print(line.rstrip('\n'))
         print('-'*78)
     skip_until(orig, None)
 
