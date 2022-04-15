@@ -4,6 +4,7 @@
 # into simple JSON with "text", "id", and "meta" keys.
 
 import sys
+import re
 import json
 import xml.etree.ElementTree as ET
 import logging
@@ -78,12 +79,18 @@ def read_documents(f):
     assert current_doc is None
 
 
+def renormalize_space(text):
+    paragraphs = [p for p in re.split(r'\n\n+', text) if p and not p.isspace()]
+    return '\n\n'.join(p.strip() for p in paragraphs)
+
+
 def main(argv):
     args = argparser().parse_args(argv[1:])
 
     for fn in args.onion:
         with open(fn) as f:
             for doc in read_documents(f):
+                doc['text'] = renormalize_space(doc['text'])
                 print(json.dumps(doc, ensure_ascii=False))
 
 
